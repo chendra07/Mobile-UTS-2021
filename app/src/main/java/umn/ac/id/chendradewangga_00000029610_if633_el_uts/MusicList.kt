@@ -3,6 +3,7 @@ package umn.ac.id.chendradewangga_00000029610_if633_el_uts
 import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -39,6 +42,22 @@ class MusicList : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menubar, menu)
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.profile){
+            startActivity(Intent(this, MyProfile::class.java))
+        }else if(item.itemId == R.id.sign_out){
+            startActivity(Intent(this, LoginPage::class.java))
+        }
+        return true
+    }
+
     private fun popUp() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Welcome!")
@@ -46,11 +65,6 @@ class MusicList : AppCompatActivity() {
         builder.setPositiveButton("Ok", { dialogInterface: DialogInterface, i: Int -> })
         builder.show()
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        val inflater = menuInflater
-//        inflater.inflate(R.)
-//    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -81,7 +95,7 @@ class MusicList : AppCompatActivity() {
                 REQUEST_CODE
             )
         } else {
-            Toast.makeText(this, "Permission Granted!", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Permission Granted!", Toast.LENGTH_LONG).show()
             audioFiles = getAllAudio(this)
         }
     }

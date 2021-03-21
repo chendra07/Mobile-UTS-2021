@@ -24,17 +24,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="75dp"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/mediaplayer_time_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="00:00"
-            android:textColor="@color/black"/>
+        android:layout_gravity="center"
+        >
 
         <SeekBar
             android:id="@+id/seektime"
@@ -46,14 +39,17 @@
             />
 
         <TextView
-            android:id="@+id/mediaplayer_time_end"
+            android:id="@+id/mediaplayer_time_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="0:00"
+            android:layout_gravity="center"
+            android:text="00:00"
             android:textColor="@color/black"/>
 
     </LinearLayout>
+
+
 
 
     <LinearLayout

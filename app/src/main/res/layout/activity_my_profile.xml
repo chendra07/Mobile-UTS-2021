@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_login_page"
     android:orientation="vertical"
     android:padding="8dp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="30dp"
-        android:src="@drawable/image_ice" />
+        android:src="@drawable/chendra_dewangga"
+        android:layout_gravity="center"
+        android:paddingTop="25dp"
+        />
 
     <TextView
         android:layout_width="match_parent"
@@ -25,6 +27,38 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="00000029610"
+        android:layout_marginBottom="20dp"
         android:textSize="25sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="https://www.youtube.com/watch?v=MMcfdEzfdB4"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="https://www.youtube.com/watch?v=vYK9YzcIaWA"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="https://www.youtube.com/watch?v=casSETDoSKE"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="https://www.youtube.com/watch?v=DaLPIC4NbYU"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="https://www.youtube.com/watch?v=sAVXRkI2ihI"
+        android:textSize="15sp"/>
 
 </LinearLayout>

@@ -25,6 +25,7 @@
         android:hint="Username"
         android:maxLines="1"
         android:inputType="text"
+        android:text="uasmobile"
         android:padding="10dp"
         android:textColor="@color/white" />
 
@@ -38,6 +39,7 @@
         android:background="@drawable/background_login_username"
         android:hint="Password"
         android:inputType="textPassword"
+        android:text="uasmobilegenap"
         android:padding="10dp"
         android:textColor="@color/white" />
 

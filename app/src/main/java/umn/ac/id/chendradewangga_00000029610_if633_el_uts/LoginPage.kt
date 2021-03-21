@@ -12,7 +12,7 @@ class LoginPage : AppCompatActivity() {
         setContentView(R.layout.activity_login_page)
 
         btnlogin.setOnClickListener {
-            if(username.text.toString() == "a" && password.text.toString().equals("a")){
+            if(username.text.toString() == "uasmobile" && password.text.toString().equals("uasmobilegenap")){
                 val intent = Intent(this, MusicList::class.java)
                 startActivity(intent)
                 Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG).show()

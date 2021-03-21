@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_music_player.*
 import umn.ac.id.chendradewangga_00000029610_if633_el_uts.MusicList.Companion.audioFiles
 import java.io.File
-import java.lang.Math.log
+
 
 class MusicPlayer : AppCompatActivity() {
 
@@ -77,12 +77,12 @@ class MusicPlayer : AppCompatActivity() {
     }
 
     private fun getIntentExtra() {
-        position = getIntent().getIntExtra("position", -1)
+        position = intent.getIntExtra("position", -1)
         music_list = audioFiles
 
         if (music_list != null) {
             play_pause_button.setImageResource(R.drawable.ic_pause)
-            uri = Uri.fromFile(File(music_list.get(position).path))
+            uri = Uri.fromFile(File(music_list[position].path))
         }
 
         if (mediaPlayer != null) {
@@ -94,13 +94,8 @@ class MusicPlayer : AppCompatActivity() {
             mediaPlayer = MediaPlayer.create(this, uri)
             mediaPlayer.start()
         }
-        seektime.setMax(mediaPlayer.getDuration() / 1000)
+        seektime.max = mediaPlayer.duration / 1000
         //durationTotal()
-    }
-
-    private fun durationTotal() {
-        val durationInt: Int = music_list[position].duration?.toInt()?.div(1000) ?: 0
-        mediaplayer_time_end.text = formattedTime((durationInt))
     }
 
     override fun onResume() {
@@ -114,34 +109,34 @@ class MusicPlayer : AppCompatActivity() {
         threadPlay = object : Thread() {
             override fun run() {
                 super.run()
-                play_pause_button.setOnClickListener(View.OnClickListener{play_pause_btnAction()})
+                play_pause_button.setOnClickListener(View.OnClickListener { play_pause_btnAction() })
             }
         }
         (threadPlay as Thread).start()
     }
 
-    private fun play_pause_btnAction(){
-        if(mediaPlayer.isPlaying){
-            play_pause_button.setImageResource(R.drawable.ic_play)
-            mediaPlayer.pause()
+    private fun play_pause_btnAction() {
+        if (!mediaPlayer.isPlaying) {
+            play_pause_button.setImageResource(R.drawable.ic_pause)
+            mediaPlayer.start()
             seektime.max = mediaPlayer.duration / 1000
-            this.runOnUiThread(object : Runnable{
-                override fun run(){
-                    if(mediaPlayer != null){
-                        val currPos = mediaPlayer.currentPosition/1000
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
+                        val currPos = mediaPlayer.currentPosition / 1000
                         seektime.progress = currPos
                     }
                     handler.postDelayed(this, 1000)
                 }
             })
-        }else{
-            play_pause_button.setImageResource(R.drawable.ic_pause)
-            mediaPlayer.start()
+        } else {
+            play_pause_button.setImageResource(R.drawable.ic_play)
+            mediaPlayer.pause()
             seektime.max = mediaPlayer.duration / 1000
-            this.runOnUiThread(object : Runnable{
-                override fun run(){
-                    if(mediaPlayer != null){
-                        val currPos = mediaPlayer.currentPosition/1000
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
+                        val currPos = mediaPlayer.currentPosition / 1000
                         seektime.progress = currPos
                     }
                     handler.postDelayed(this, 1000)
@@ -150,9 +145,9 @@ class MusicPlayer : AppCompatActivity() {
         }
     }
 
-    private fun btnThreadNext(){
-        threadNext = object : Thread(){
-            override fun run(){
+    private fun btnThreadNext() {
+        threadNext = object : Thread() {
+            override fun run() {
                 super.run()
                 next_button.setOnClickListener { next_btnAction() }
             }
@@ -160,19 +155,18 @@ class MusicPlayer : AppCompatActivity() {
         (threadNext as Thread).start()
     }
 
-    private fun next_btnAction(){
-        if(mediaPlayer.isPlaying){
+    private fun next_btnAction() {
+        if (mediaPlayer.isPlaying) {
             mediaPlayer.stop()
             mediaPlayer.release()
             position = (position + 1) % music_list.size
             uri = Uri.parse(music_list[position].path)
             mediaPlayer = MediaPlayer.create(this, uri)
-            durationTotal()
             mediaplayer_title.text = music_list[position].title
             seektime.max = mediaPlayer.duration / 1000
-            this.runOnUiThread(object : Runnable{
-                override fun run(){
-                    if(mediaPlayer != null){
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
                         val currPos = mediaPlayer.currentPosition / 1000
                         seektime.progress = currPos
                     }
@@ -181,18 +175,17 @@ class MusicPlayer : AppCompatActivity() {
             })
             play_pause_button.setImageResource(R.drawable.ic_pause)
             mediaPlayer.start()
-        }else{
+        } else {
             mediaPlayer.stop()
             mediaPlayer.release()
             position = (position + 1) % music_list.size
             uri = Uri.parse(music_list[position].path)
             mediaPlayer = MediaPlayer.create(this, uri)
-//            durationTotal()
-            mediaplayer_title.text = music_list.get(position).title
+            mediaplayer_title.text = music_list[position].title
             seektime.max = mediaPlayer.duration / 1000
-            this.runOnUiThread(object : Runnable{
-                override fun run(){
-                    if(mediaPlayer != null){
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
                         val currPos = mediaPlayer.currentPosition / 1000
                         seektime.progress = currPos
                     }
@@ -203,12 +196,55 @@ class MusicPlayer : AppCompatActivity() {
         }
     }
 
-    private fun btnThreadPrev(){
-        threadPrev = object : Thread(){
-            override fun run(){
+    private fun btnThreadPrev() {
+        threadPrev = object : Thread() {
+            override fun run() {
                 super.run()
-                prev_button.setOnClickListener { prev_button }
+                prev_button.setOnClickListener { prev_btnAction() }
             }
+        }
+        (threadPrev as Thread).start()
+
+    }
+
+    private fun prev_btnAction() {
+        if (!mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+            position = if (position - 1 < 0) music_list.size - 1 else position - 1
+            uri = Uri.parse(music_list[position].path)
+            mediaPlayer = MediaPlayer.create(applicationContext, uri)
+            mediaplayer_title.text = music_list[position].title ?: "default"
+            seektime.max = mediaPlayer.duration / 1000
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
+                        var currPos = mediaPlayer.currentPosition / 1000
+                        seektime.progress = currPos
+                    }
+                    handler.postDelayed(this, 1000)
+                }
+            })
+            play_pause_button.setImageResource(R.drawable.ic_pause)
+        } else {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+            position = if (position - 1 < 0) music_list.size - 1 else position - 1
+            uri = Uri.parse(music_list[position].path)
+            mediaPlayer = MediaPlayer.create(applicationContext, uri)
+            mediaplayer_title.text = music_list[position].title ?: "default"
+            seektime.max = mediaPlayer.duration / 1000
+            this.runOnUiThread(object : Runnable {
+                override fun run() {
+                    if (mediaPlayer != null) {
+                        var currPos = mediaPlayer.currentPosition / 1000
+                        seektime.progress = currPos
+                    }
+                    handler.postDelayed(this, 1000)
+                }
+            })
+            play_pause_button.setImageResource(R.drawable.ic_play)
+            mediaPlayer.start()
         }
     }
 

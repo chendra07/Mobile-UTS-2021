@@ -17,13 +17,9 @@ import android.util.Log
 
 class MainActivity : AppCompatActivity() {
 
-    val REQUEST_CODE = 1
-    var audioFiles: ArrayList<AudioFiles>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         btnprofile.setOnClickListener {
             val intent = Intent(this, MyProfile::class.java)
@@ -31,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnloginpage.setOnClickListener {
-            val intent = Intent(this, MusicList::class.java)
+            val intent = Intent(this, LoginPage::class.java)
             startActivity(intent)
         }
     }
-
 }

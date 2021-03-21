@@ -17,6 +17,27 @@ class RecyclerAdapters internal constructor(context: Context, audioFiles: ArrayL
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private val mContext: Context = context
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = mInflater.inflate(R.layout.card_layout, parent, false)
+        return ViewHolder(v, this)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerAdapters.ViewHolder, position: Int) {
+        holder.file_name.text = mFiles[position].title
+        holder.album_music.text = mFiles[position].album
+
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(mContext, MusicPlayer::class.java)
+            intent.putExtra("position", position)
+            mContext.startActivity(intent)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return mFiles.size
+    }
+
     inner class ViewHolder(itemView: View, adapters: RecyclerAdapters) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var file_name: TextView = itemView.item_title
@@ -33,24 +54,4 @@ class RecyclerAdapters internal constructor(context: Context, audioFiles: ArrayL
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = mInflater.inflate(R.layout.card_layout, parent, false)
-        return ViewHolder(v, this)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerAdapters.ViewHolder, position: Int) {
-        holder.file_name.text = mFiles[position].title
-        holder.album_music.text = mFiles[position].duration.toString()
-
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(mContext, MusicPlayer::class.java)
-            intent.putExtra("position", position)
-            mContext.startActivity(intent)
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return mFiles.size
-    }
 }
